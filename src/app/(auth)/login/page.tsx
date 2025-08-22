@@ -4,11 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LoginFormData, loginFormSchema } from "@/types/login";
 import { login } from "@/api/login";
-import Cookies from '../../../../node_modules/@types/js-cookie';
+import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 import Image from "next/image";
 import Link from 'next/link';
-import { Key, Envelope, PlusCircle, DotsThreeOutlineVertical, SignOut } from 'phosphor-react';
+import { Key, Envelope } from 'phosphor-react';
 
 
 export default function LoginPage() {
