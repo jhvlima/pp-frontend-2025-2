@@ -1,9 +1,16 @@
 "use client"
-
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { PaperPlaneTilt, User, ArrowElbowDownLeft } from 'phosphor-react';
 
 export function Sidebar() {
+  const router = useRouter();
+  const handleLogout = () => {
+    Cookies.remove('jwt');
+    router.push('/login');
+  };
+
   return (
     <>
       {/* Mobile Header */}
@@ -46,10 +53,13 @@ export function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="/sair" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 p-3 rounded-lg transition-colors text-left hover:bg-gray-100"
+            >
               <ArrowElbowDownLeft size={24} />
               <span>Sair</span>
-            </Link>
+            </button>
           </li>
         </ul>
       </div>
@@ -73,10 +83,13 @@ export function Sidebar() {
             <User size={20} />
             <span className="text-xs">Editar perfil</span>
           </Link>
-          <Link href="/sair" className="flex flex-col items-center gap-1 p-2">
+          <button
+            onClick={handleLogout}
+            className="flex flex-col items-center gap-1 p-2"
+          >
             <ArrowElbowDownLeft size={20} />
             <span className="text-xs">Sair</span>
-          </Link>
+          </button>
         </div>
       </div>
     </>
