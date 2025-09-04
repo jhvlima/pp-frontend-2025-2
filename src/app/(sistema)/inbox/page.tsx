@@ -1,22 +1,16 @@
 'use client'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
 import { Email } from "@/types/email";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
+import Link from "next/link";
 // Um array com três exemplos de emails
 export const emailsExemplo: Email[] = [
   {
     // --- Email 1: Profissional, não lido ---
-    id: 'uuid-001-abc',
+    id: '',
     titulo: 'Reunião de Alinhamento - Projeto Alfa',
     conteudo: 'Olá equipe, gostaria de marcar nossa reunião de alinhamento para amanhã, às 10h. Por favor, confirmem a presença. Abraços, Joana.',
     idDeQuemEnviou: 'joana.silva@empresa.com',
@@ -46,58 +40,68 @@ export const emailsExemplo: Email[] = [
   },
 ];
 
+
+// Função para extrair o primeiro nome do e-mail
+const getFirstName = (email: string) => email.split('@')[0];
+
 export default function InboxPage() {
   const [emails, setEmails] = useState<Email[]>([]);
+  // Estado para armazenar o ID do email selecionado
+  const [selectedEmailId, setSelectedEmailId] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchEmails() {
-      try {
-        //const response = await api.get("/emails");
-        const response = emailsExemplo;
-        setEmails(response);
-      } catch (err) {
-        toast.error("Erro ao carregar os emails", {
-          description: "Ocorreu um erro ao buscar os dados. Tente novamente.",
-        });
-      }
-    }
-    fetchEmails();
+    setEmails(emailsExemplo);
   }, []);
 
-  const handleEmailClick = (email: Email) => {
-    console.log("Email selecionado:", email.id);
-  };
-
   return (
-<div className="border rounded-lg bg-card text-card-foreground overflow-hidden">
-  <Table>
-    <TableHeader>
-      <TableRow className="border-t-0 hover:bg-transparent">
-        <TableHead className="w-[80px] border-r">Enviado por:</TableHead>
-        <TableHead className="border-r">Nome:</TableHead>
-        <TableHead className="border-r">Título:</TableHead>
-        <TableHead className="text-right w-[150px]">Visto:</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {emails.map((email) => (
-        <TableRow
-          key={email.id}
-          onClick={() => handleEmailClick(email)}
-          className="border-t"
-        >
-          <TableCell className="border-r">{email.idDeQuemEnviou}</TableCell>
-          <TableCell className="border-r">{email.idDeQuemEnviou}</TableCell>
-          <TableCell className="text-right text-muted-foreground border-r">{email.titulo}</TableCell>
-          <TableCell className="flex justify-center items-center">
-            {!email.jaVisto && (
-              <div className="w-2 h-2 rounded-full bg-blue-500" title="Não lido"></div>
-            )}
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</div>
+    <div className="space-y-4">
+      <div className="flex items-center gap-4">
+        <h1 className="text-3xl font-bold">Caixa de Entrada</h1>
+
+      </div>
+
+      <div className="border rounded-lg bg-white overflow-hidden">
+        <div className="hidden md:flex p-4 text-sm font-medium text-muted-foreground border-b-2">
+          <div className="flex-1">Enviado por:</div>
+          <div className="w-[150px]">Nome:</div>
+          <div className="flex-1">Título:</div>
+          <div className="w-[80px] text-center">Visto:</div>
+        </div>
+
+        {/* Corpo da Tabela com espaçamento entre as linhas */}
+        <div className="space-y-0">
+          {emails.map((email) => (
+            <Link key={email.id} href={`/inbox/${email.id}`} passHref onClick={() => setSelectedEmailId(email.id)}>
+              <Card
+                className={`
+                  rounded-none border-0 shadow-none hover:bg-muted transition-colors
+                  ${selectedEmailId === email.id ? 'bg-orange-500 text-white' : ''}
+                  ${selectedEmailId === email.id ? 'hover:bg-orange-500' : 'hover:bg-gray-100'}
+                `}
+              >
+                <CardContent className="flex items-center p-4">
+                  {/* Célula 1: Remetente */}
+                  <div className="flex-1 pr-4 border-r-2 border-dashed">
+                    {email.idDeQuemEnviou}
+                  </div>
+                  {/* Célula 2: Nome */}
+                  <div className="w-[150px] px-2 border-r-2 border-dashed">
+                    {getFirstName(email.idDeQuemEnviou)}
+                  </div>
+                  {/* Célula 3: Título */}
+                  <div className="flex-1 px-2 border-r-2 border-dashed">
+                    {email.titulo}
+                  </div>
+                  {/* Célula 4: Status (Agora com texto) */}
+                  <div className="w-[80px] flex justify-center items-center pl-2">
+                    {email.jaVisto ? 'Sim' : 'Não'}
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { PaperPlaneTilt, User, ArrowElbowDownLeft } from 'phosphor-react';
+import { PaperPlaneTilt, EnvelopeSimple, User, ArrowElbowDownLeft } from 'phosphor-react'; {/*MailBox*/}
 
 export function Sidebar() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export function Sidebar() {
         <ul className="space-y-4 flex-1">
           <li>
             <Link href="/inbox" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
-              <User size={24} />
+              <EnvelopeSimple size={24} />
               <span>Inbox</span>
             </Link>
           </li>
@@ -42,7 +42,7 @@ export function Sidebar() {
           </li>
           <li>
             <Link href="/Enviar e-mail" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
-              <PaperPlaneTilt size={24} />
+              <EnvelopeSimple size={24} />
               <span>Enviar e-mail</span>
             </Link>
           </li>
