@@ -60,8 +60,8 @@ export default function LoginPage() {
                             className="text-white p-2"
                             {...register("email")}
                         />
-                        {errors.email && <span>{errors.email.message}</span>}
                     </div>
+                    {errors.email && (<span className="text-red-500 text-xs mt-1">{errors.email.message}</span>)}
 
                     <div className='flex items-center border-b border-orange-700 py-1'>
                         <Key className="text-gray-400 mr-3" size={20} />
@@ -71,8 +71,8 @@ export default function LoginPage() {
                             className="text-white p-2"
                             {...register("senha")}
                         />
-                        {errors.senha && <span>{errors.senha.message}</span>}
                     </div>
+                    {errors.password && (<span className="text-red-500 text-xs mt-1">{errors.password.message}</span>)}
 
                     <button
                         type="submit"

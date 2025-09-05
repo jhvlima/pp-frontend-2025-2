@@ -21,8 +21,8 @@ export default function CadastroPage() {
         defaultValues: {
             name: "",
             email: "",
-            senha: "",
-            confirm_senha: "",
+            password: "",
+            confirm_password: "",
         },
         resolver: zodResolver(cadastroFormSchema)
     })
@@ -43,13 +43,13 @@ export default function CadastroPage() {
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4">
-            <div className="flex w-full max-w-4xl flex-col items-center justify-center rounded-2xl bg-black p-6 sm:p-8">
+            <div className="flex w-full max-w flex-col items-center justify-center rounded-2xl bg-black p-6 sm:p-8">
                 <div className="w-48 md:w-64 mb-8">
                     <Image src="/logo2.svg" alt="Logo" width={512} height={128} />
                 </div>
                 <form
                     onSubmit={handleSubmit(handleCadastro)}
-                    className="flex flex-col items-center"
+                    className="flex w-full max-w-sm flex-col items-center"
                 >
                     <div className="flex items-center border-b border-orange-700 py-1">
                         <User className="text-gray-400 mr-3" size={20} />
@@ -59,8 +59,8 @@ export default function CadastroPage() {
                             className="text-white p-2"
                             {...register("name")}
                         />
-                        {errors.name && <span>{errors.name.message}</span>}
                     </div>
+                    {errors.name && (<span className="text-red-500 text-xs mt-1">{errors.name.message}</span>)}
 
                     <div className="flex items-center border-b border-orange-700 py-1">
                         <Envelope className="text-gray-400 mr-3" size={20} />
@@ -70,8 +70,8 @@ export default function CadastroPage() {
                             className="text-white p-2"
                             {...register("email")}
                         />
-                        {errors.email && <span>{errors.email.message}</span>}
                     </div>
+                    {errors.email && (<span className="text-red-500 text-xs mt-1">{errors.email.message}</span>)}
 
                     <div className='flex items-center border-b border-orange-700 py-1'>
                         <Key className="text-gray-400 mr-3" size={20} />
@@ -79,10 +79,10 @@ export default function CadastroPage() {
                             type="password"
                             placeholder="Senha"
                             className="text-white p-2"
-                            {...register("senha")}
+                            {...register("password")}
                         />
-                        {errors.senha && <span>{errors.senha.message}</span>}
                     </div>
+                    {errors.password && (<span className="text-red-500 text-xs mt-1">{errors.password.message}</span>)}
 
                     <div className='flex items-center border-b border-orange-700 py-1'>
                         <CheckCircle className="text-gray-400 mr-3" size={20} />
@@ -90,10 +90,10 @@ export default function CadastroPage() {
                             type="confirm_senha"
                             placeholder="Confirmar senha"
                             className="text-white p-2"
-                            {...register("confirm_senha")}
+                            {...register("confirm_password")}
                         />
-                        {errors.confirm_senha && <span>{errors.confirm_senha.message}</span>}
                     </div>
+                    {errors.confirm_password && (<span className="text-red-500 text-xs mt-1">{errors.confirm_password.message}</span>)}
 
                     <button
                         type="submit"

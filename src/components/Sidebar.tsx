@@ -1,14 +1,26 @@
 "use client"
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { PaperPlaneTilt, EnvelopeSimple, User, ArrowElbowDownLeft } from 'phosphor-react'; {/*MailBox*/}
+import { Envelope, PaperPlaneTilt, EnvelopeSimple, User, ArrowElbowDownLeft } from 'phosphor-react'; {/*MailBox*/ }
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from './ui/separator';
 
 export function Sidebar() {
   const router = useRouter();
+  const pathname = usePathname();
+
   const handleLogout = () => {
     Cookies.remove('jwt');
     router.push('/login');
+  };
+
+  const isLinkActive = (href: string) => pathname === href;
+
+  const userData = {
+    name: 'Captain Price',
+    avatarUrl: 'logo5.svg',
+    fallback: 'CP'
   };
 
   return (
@@ -29,29 +41,41 @@ export function Sidebar() {
 
         <ul className="space-y-4 flex-1">
           <li>
-            <Link href="/inbox" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
-              <EnvelopeSimple size={24} />
+            <Link
+              href="/inbox"
+              className={`
+                flex items-center gap-3 p-3 rounded-lg transition-colors 
+                ${isLinkActive('/inbox')
+                  ? 'text-orange-600 font-bold'
+                  : ''
+                }
+              `}>
+              <Envelope size={24} />
               <span>Inbox</span>
             </Link>
           </li>
+
           <li>
             <Link href="/Enviados" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
               <PaperPlaneTilt size={24} />
               <span>Enviados</span>
             </Link>
           </li>
+
           <li>
             <Link href="/Enviar e-mail" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
               <EnvelopeSimple size={24} />
               <span>Enviar e-mail</span>
             </Link>
           </li>
+
           <li>
             <Link href="/Editar perfil" className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-gray-100">
               <User size={24} />
               <span>Editar perfil</span>
             </Link>
           </li>
+
           <li>
             <button
               onClick={handleLogout}
@@ -62,13 +86,26 @@ export function Sidebar() {
             </button>
           </li>
         </ul>
-      </div>
+
+        <div className="mt-auto">
+          <Separator className="my-4" />
+
+          {/* 3. SEÇÃO DO PERFIL DO UTILIZADOR */}
+          <div className="flex items-center gap-3 p-3 mb-4">
+            <Avatar>
+              <AvatarImage src={userData.avatarUrl} alt={userData.name} />
+              <AvatarFallback>{userData.fallback}</AvatarFallback>
+            </Avatar>
+            <span className="font-semibold">{userData.name}</span>
+          </div>
+        </div>
+      </div >
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 z-50">
+      < div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 z-50" >
         <div className="flex justify-around items-center py-2">
           <Link href="/inbox" className="flex flex-col items-center gap-1 p-2">
-            <User size={20} />
+            <Envelope size={20} />
             <span className="text-xs">Inbox</span>
           </Link>
           <Link href="/Enviados" className="flex flex-col items-center gap-1 p-2">
@@ -91,7 +128,7 @@ export function Sidebar() {
             <span className="text-xs">Sair</span>
           </button>
         </div>
-      </div>
+      </div >
     </>
   );
 }

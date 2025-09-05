@@ -4,16 +4,18 @@
   --background: #ffffff;
   --foreground: #171717;
   --color-orange: #FF8E3D;
+  --color-gray-100: #F3F4F6;
+
 }
 
 .theme-sistema {
-  background-color: var(--background);
+  background-color: var(--color-gray-100);
   color: var(--foreground);
   font-family: Nunito;
 }
 
 .theme-auth {
   background-color: var(--color-orange);
-  color: var(--foreground);
+  color: var(--background);
   font-family: Nunito;
 }

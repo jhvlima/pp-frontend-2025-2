@@ -10,8 +10,9 @@ export default function SistemaLayout({
   children: React.ReactNode;
 }) {
   return (
+
     <div className="theme-sistema">
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         {/* 1. Sidebar para Desktop */}
         <Sidebar />
 

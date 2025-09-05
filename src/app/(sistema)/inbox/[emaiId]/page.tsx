@@ -4,7 +4,7 @@ import Link from "next/link";
 export const emailsExemplo: Email[] = [
   {
     // --- Email 1: Profissional, não lido ---
-    id: '',
+    id: 'uuid-002-def',
     titulo: 'Reunião de Alinhamento - Projeto Alfa',
     conteudo: 'Olá equipe, gostaria de marcar nossa reunião de alinhamento para amanhã, às 10h. Por favor, confirmem a presença. Abraços, Joana.',
     idDeQuemEnviou: 'joana.silva@empresa.com',

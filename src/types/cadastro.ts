@@ -10,11 +10,11 @@ export const cadastroFormSchema = z.object({
     email: z.string({ message: 'Deve ser um email válido.' })
         .nonempty({ message: 'O email é obrigatório.' }),
 
-    senha: z.string()
+    password: z.string()
         .nonempty({ message: 'A senha é obrigatória.' })
         .min(6, { message: 'A senha deve ter pelo menos 6 caracteres' }),
 
-    confirm_senha: z.string()
+    confirm_password: z.string()
         .nonempty({ message: 'A senha é obrigatória.' })
 })
 
